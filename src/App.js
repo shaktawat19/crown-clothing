@@ -16,6 +16,7 @@ import { setCurrentUser } from "./redux/user/user.actions";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "./redux/user/user.selectors";
 import CheckoutPage from "./pages/checkout/checkout.component";
+import CollectionPage from "./pages/collection/collection.component";
 
 class App extends Component {
   unsubscribeFromAuth = null;
@@ -56,15 +57,18 @@ class App extends Component {
         <Header />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/shop" element={<ShopPage />} />
+          <Route path="shop" element={<ShopPage />}>
+            <Route path={":collectionId"} element={<CollectionPage />} />
+          </Route>
+
           <Route
             exact
-            path="/signin"
+            path="signin"
             element={
               this.props.currentUser ? <Navigate to="/" /> : <SignInAndSignUp />
             }
           />
-          <Route exact path="/checkout" element={<CheckoutPage />} />
+          <Route exact path="checkout" element={<CheckoutPage />} />
         </Routes>
       </Router>
     );
